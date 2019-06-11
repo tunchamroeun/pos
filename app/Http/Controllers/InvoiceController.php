@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\IncomeNote;
 use App\Invoice;
 use App\InvoiceDetail;
 use App\StockDetail;
@@ -37,6 +38,12 @@ class InvoiceController extends Controller
             $updateQty->save();
         }
         if ($invoice){
+            IncomeNote::insert([
+                'invoice_id'=>$invoice->id,
+                'amount'=>$input['_data']['income_note_amount'],
+                'created_at'=>Carbon::now(),
+                'updated_at'=>Carbon::now()
+            ]);
             InvoiceDetail::insert($detail_data);
             return 'success';
         }
@@ -44,7 +51,7 @@ class InvoiceController extends Controller
     }
     public function selling_list()
     {
-        $stockItem =  StockDetail::with('variation')->where('remain_qty','>=',1)->get();
+        $stockItem =  StockDetail::with('variation')->where('remain_qty','>=',1)->limit(1)->get();
         return Datatables::of($stockItem)->toJson();
     }
 

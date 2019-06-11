@@ -16,7 +16,6 @@ class CreateIncomeNotesTable extends Migration
         Schema::create('income_notes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('invoice_id');
-            $table->string('desc')->default('ថ្លៃឈ្នួល');
             $table->float('amount');
             $table->timestamps();
         });

@@ -40,6 +40,12 @@
                         បញ្ញីលក់
                     </h5>
                 </div>
+                <div class="ui segment form">
+                    <div class="field">
+                        <label>ថ្លៃឈ្នួល</label>
+                        <input type="number" step="any" id="incomeNote" placeholder="បញ្ចូលថ្លៃឈ្នួល">
+                    </div>
+                </div>
                 <div class="ui segment">
                     <div class="ui divided list" id="order-list">
                         <h4>ស្កេន ឫចុចលើផ្ទាំងទំនិញ</h4>
@@ -132,11 +138,13 @@
                     orderInvoiceDetail: [],
                     orderInvoice: {
                         "total_amount": 0,
+                        "income_note_amount": 0,
                         "total_qty": 0,
                     },
                     resetData:function () {
                         this.orderInvoiceDetail = [];
                         this.orderInvoice.total_amount = 0;
+                        this.orderInvoice.income_note_amount = 0;
                         this.orderInvoice.total_qty = 0;
                     }
                 };
@@ -190,10 +198,10 @@
                         });
                     },
                     updateTotalAmount:function () {
-                        $('#total_amount').text(parseFloat(dataTotal.total_amount).toFixed(2));
+                        $('#total_amount').text(parseFloat(dataTotal.total_amount+dataTotal.income_note_amount).toFixed(2));
                     },
                     disableAbleBtn:function () {
-                        if (posCtrl.posData().orderInvoiceDetail.length<=0){
+                        if (posCtrl.posData().orderInvoiceDetail.length<=0 && posCtrl.posData().orderInvoice.income_note_amount<=0){
                             $('#btn-invoice').addClass('disabled');
                             $('#btn-print').addClass('disabled');
                         } else {
@@ -363,6 +371,18 @@
                         invoicing();
                         //show invoice
                     });
+                    $(document).on('keyup','#incomeNote',function () {
+                        if (isNaN(parseFloat($(this).val()))){
+                            posCtrl.posData().orderInvoice.income_note_amount = 0;
+                        } else {
+                            posCtrl.posData().orderInvoice.income_note_amount = parseFloat($(this).val());
+                        }
+                        console.log(posCtrl.posData().orderInvoice.income_note_amount);
+                        //update total amount
+                        UICtrl.updateOrderList().updateTotalAmount();
+                        //disable btn
+                        UICtrl.updateOrderList().disableAbleBtn();
+                    })
                 }
 
                 return {
