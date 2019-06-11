@@ -42,45 +42,47 @@
                                     <div class="field">
                                         <label>ឈ្មោះទំនិញ</label>
                                         <input type="text" name="product_name" placeholder="ឈ្មោះទំនិញ">
+                                        <input type="hidden" name="variation[0]" value="គ្រឿងឡាន">
+                                        <input type="hidden" name="product_category" value="គ្រឿងឡាន" placeholder="ប្រភេទទំនិញ">
                                     </div>
-                                    <div class="field">
-                                        <label>ប្រភេទទំនិញ</label>
-                                        <div class="ui search selection allowAdditions category dropdown" id="province">
-                                            <input type="hidden" name="product_category" placeholder="ប្រភេទទំនិញ">
-                                            <i class="dropdown icon"></i>
-                                            <input type="text" class="search">
-                                            <div class="default text">ជ្រើសរើស ប្រភេទទំនិញ</div>
-                                        </div>
-                                    </div>
+                                    {{--<div class="field">--}}
+                                        {{--<label>ប្រភេទទំនិញ</label>--}}
+                                        {{--<div class="ui search selection allowAdditions category dropdown" id="province">--}}
+                                            {{--<input type="hidden" name="product_category" placeholder="ប្រភេទទំនិញ">--}}
+                                            {{--<i class="dropdown icon"></i>--}}
+                                            {{--<input type="text" class="search">--}}
+                                            {{--<div class="default text">ជ្រើសរើស ប្រភេទទំនិញ</div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
                                 </div>
                             </td>
                         </tr>
-                        <thead>
+                        {{--<thead>
                         <tr>
                             <th colspan="2">
                                 បម្រែបម្រួលទំនិញ
                             </th>
                         </tr>
-                        </thead>
-                        <tr>
-                            <td class="right aligned">
-                                តម្លៃប្រែប្រួល
-                                <i id="variation_add" class="circular olive add icon link popupHover" data-content="បន្ថែម" data-variation="mini"></i>
-                            </td>
-                            <td id="append_variation">
-                                <div class="three fields mb-1">
-                                    <div class="field">
-                                        <label>ប្រភេទទំនិញ</label>
-                                        <div class="ui search selection allowAdditions variation dropdown" id="province">
-                                            <input type="hidden" name="variation[0]">
-                                            <i class="dropdown icon"></i>
-                                            <input type="text" class="search">
-                                            <div class="text"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        </thead>--}}
+                        {{--<tr>--}}
+                            {{--<td class="right aligned">--}}
+                                {{--តម្លៃប្រែប្រួល--}}
+                                {{--<i id="variation_add" class="circular olive add icon link popupHover" data-content="បន្ថែម" data-variation="mini"></i>--}}
+                            {{--</td>--}}
+                            {{--<td id="append_variation">--}}
+                                {{--<div class="three fields mb-1">--}}
+                                    {{--<div class="field">--}}
+                                        {{--<label>ប្រភេទទំនិញ</label>--}}
+                                        {{--<div class="ui search selection allowAdditions variation dropdown" id="province">--}}
+                                            {{--<input type="hidden" name="variation[0]">--}}
+                                            {{--<i class="dropdown icon"></i>--}}
+                                            {{--<input type="text" class="search">--}}
+                                            {{--<div class="text"></div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</td>--}}
+                        {{--</tr>--}}
                         </tbody>
                         <tfoot class="full-width">
                         <tr>
