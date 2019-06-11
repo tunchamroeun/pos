@@ -30,7 +30,7 @@
             <div class="ui segments stacked">
                 <div class="ui segment">
                     <h5 class="ui header">
-                        បញ្ជីទំហំទំនិញ
+                        បញ្ជីទំនិញ
                     </h5>
                 </div>
                 {{Form::open(['url'=>route('stock._import'),'method'=>'post','class'=>'ui segment grid'])}}
@@ -39,7 +39,7 @@
                             <h4>ពិពណ៌នា</h4>
                         </div>
                         <div class="thirteen wide column">
-                            <h4>បម្រែប្រួល</h4>
+                            {{--<h4>បម្រែប្រួល</h4>--}}
                         </div>
                     </div>
                     <div class="ui divider m-0"></div>
