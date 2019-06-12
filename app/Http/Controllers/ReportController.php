@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\IncomeNote;
 use App\Invoice;
 use App\InvoiceDetail;
 use App\Stock;
@@ -87,14 +88,19 @@ class ReportController extends Controller
         $end = date_format($end,'Y-m-d');
         $end = Carbon::create($end)->addDay(1);
         $stockData = Invoice::all()->whereBetween('created_at',[$start,$end]);
+        $incomeNotekData = IncomeNote::all()->whereBetween('created_at',[$start,$end]);
         $totalAmount = 0;
         $totalQty = 0;
         foreach ($stockData as $value){
             $totalAmount +=$value['total_amount'];
             $totalQty +=$value['total_qty'];
         }
+        $totalNoteAmount = 0;
+        foreach ($incomeNotekData as $value){
+            $totalNoteAmount +=$value['amount'];
+        }
         return[
-            'totalAmount'=>$totalAmount,
+            'totalAmount'=>$totalAmount+$totalNoteAmount,
             'totalQty'=>$totalQty,
         ];
     }

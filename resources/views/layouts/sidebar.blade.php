@@ -4,6 +4,8 @@
         <img src="{{asset('sigware/img/logo.png')}}" alt="sigwarelogo"/><img
             src="{{asset('sigware/img/thumblogo.png')}}" alt="sigwarelogo" class="displaynone"/>
     </a>
+    {{--Admin--}}
+    @if(Auth::user()->role===1)
     {{--menu item mobile--}}
     <a class="item {{request()->is('dashboard')? 'active':''}} popupHover" href="{{route('dashboard.index')}}" data-content="ផ្ទាំងគ្រប់គ្រង" data-position="right center">
         <i class="ion-speedometer icon"></i> <span class="colhidden">ផ្ទាំងគ្រប់គ្រង</span>
@@ -120,4 +122,51 @@
             </a>--}}
         </div>
     </div>
+    @else
+    {{--User--}}
+    <div class="ui dropdown item displaynone scrolling popupHover"  data-content="ទំនិញ" data-position="right center">
+        <span>ទំនិញ</span>
+        <i class="cubes icon"></i>
+
+        <div class="menu">
+            <div class="header">
+                ទំនិញ
+            </div>
+            <div class="ui divider"></div>
+            <a class="item" href="{{route('product.index')}}">
+                ទាំអស់
+            </a>
+            <a class="item" href="{{route('product.create')}}">
+                បន្ថែម
+            </a>
+            {{--<a class="item" href="">
+                ព្រីនស្ទិកគើ
+            </a>--}}
+        </div>
+    </div>
+    <a class="popupHover item" href="{{route('pos.index')}}" data-content="លក់ទំនិញ" data-position="right center">
+        <i class="ion-android-cart icon"></i><span class="colhidden">លក់ទំនិញ</span>
+    </a>
+    <a class="item popupHover {{request()->is('media')? 'active':''}}" href="{{route('media.index')}}" href="#" data-content="មេឌៀ" data-position="right center">
+        <i class="ion-images icon"></i><span class="colhidden">មេឌៀ</span>
+    </a>
+    <div class="ui accordion inverted">
+        {{--Dropdown desktop--}}
+        <a class="title item {{request()->is('product*')? 'active':''}}">
+            <i class="cubes icon titleIcon"></i> ទំនិញ <i class="dropdown icon"></i>
+        </a>
+        <div class="content {{request()->is('product*')? 'active':''}}">
+            <a class="item {{request()->is('product')? 'active':''}}" href="{{route('product.index')}}">
+                ទាំអស់
+            </a>
+            <a class="item {{request()->is('product/create')? 'active':''}}" href="{{route('product.create')}}">
+                បន្ថែម
+            </a>
+            {{--<a class="item" href="">
+                ព្រីនស្ទិកគើ
+            </a>--}}
+        </div>
+
+    </div>
+    @endif
 </div>
