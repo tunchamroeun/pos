@@ -9,6 +9,7 @@ use App\Stock;
 use App\StockDetail;
 use App\Variation;
 use Carbon\Carbon;
+use Cknow\Money\Money;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Yajra\DataTables\DataTables;
@@ -55,7 +56,7 @@ class ReportController extends Controller
                 return $date->created_at->diffForHumans();
             })
             ->editColumn('total_pur_price',function ($total_pur_price){
-                return money_format('%i', $total_pur_price->total_pur_price);
+                return Money::USD($total_pur_price->total_pur_price);
             })
             ->addColumn('action',function ($action){
                 return '<button class="ui button mini olive btn-detail" id="'.$action->id.'"><i class="icon eye"></i></button>';
@@ -74,7 +75,7 @@ class ReportController extends Controller
                 return $date->created_at->diffForHumans();
             })
             ->editColumn('pur_price',function ($pur){
-                return money_format('%i', $pur->pur_price);
+                return Money::USD($pur->pur_price);
             })
             ->rawColumns(['variation.product.image'])
             ->toJson();
@@ -118,7 +119,7 @@ class ReportController extends Controller
                 return $date->created_at->diffForHumans();
             })
             ->editColumn('total_amount',function ($total_amount){
-                return money_format('%i', $total_amount->total_amount);
+                return Money::USD($total_amount->total_amount);
             })
             ->addColumn('action',function ($action){
                 return '<button class="ui button mini olive btn-detail-sell" id="'.$action->id.'"><i class="icon eye"></i></button>';
@@ -143,7 +144,7 @@ class ReportController extends Controller
                 return $date->created_at->diffForHumans();
             })
             ->editColumn('amount',function ($pur){
-                return money_format('%i', $pur->amount);
+                return Money::USD($pur->amount);
             })
             ->rawColumns(['stock_detail.variation.product.image'])
             ->toJson();
