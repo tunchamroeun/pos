@@ -122,7 +122,8 @@
                     </div>
                 </div>
                 <div class="ui segment">
-                    <table id="import-stock" class="ui compact selectable striped celled table tablet stackable datatable">
+                    <table id="import-stock"
+                           class="ui compact selectable striped celled table tablet stackable datatable">
                         <thead>
                         <tr>
                             <th>ល.រ</th>
@@ -204,10 +205,12 @@
                 លម្អិតទំនិញ
             </div>
             <div class="content">
-                <table id="import-stock-modal" class="ui compact selectable striped celled table tablet stackable datatable">
+                <table id="import-stock-modal"
+                       class="ui compact selectable striped celled table tablet stackable datatable">
                     <thead>
                     <tr>
-                        <th colspan="8">ថ្លែឈ្នួល $ <span id="income_note"></span> សរុប $ <span id="total_amount"></span></th>
+                        <th colspan="8">ថ្លែឈ្នួល $ <span id="income_note"></span> សរុប $ <span
+                                id="total_amount"></span></th>
                     </tr>
                     <tr>
                         <th>ល.រ</th>
@@ -246,6 +249,7 @@
             //import
             var start = moment().subtract(29, 'days');
             var end = moment();
+
             function cbImpSell(start, end) {
                 $('#reportrange-imp-sell span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
                 $.ajax({
@@ -278,6 +282,7 @@
                 });
 
             }
+
             $('#reportrange-imp-sell').daterangepicker({
                 startDate: start,
                 endDate: end,
@@ -293,6 +298,7 @@
                 }
             }, cbImpSell);
             cbImpSell(start, end);
+
             /*import export*/
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -315,9 +321,13 @@
                             deferRender: true,
                             ajax: {
                                 url: '{{route('report.stock.data.detail')}}',
-                                method:'post',
+                                method: 'post',
                                 data: {
-                                    'range' : {'start':start.format('MMMM D, YYYY'),'end':end.format('MMMM D, YYYY'),'_token': '{{csrf_token()}}'},
+                                    'range': {
+                                        'start': start.format('MMMM D, YYYY'),
+                                        'end': end.format('MMMM D, YYYY'),
+                                        '_token': '{{csrf_token()}}'
+                                    },
                                 }
                             },
                             columns: [
@@ -332,6 +342,7 @@
                     }
                 });
             }
+
             $('#reportrange').daterangepicker({
                 startDate: start,
                 endDate: end,
@@ -348,7 +359,7 @@
             }, cb);
             cb(start, end);
             //modal import
-            $(document).on('click','.btn-detail',function () {
+            $(document).on('click', '.btn-detail', function () {
                 $(".ui.modal.small").modal('show');
                 //aa
                 let product = $('#import-stock-modal').DataTable({
@@ -358,9 +369,9 @@
                     deferRender: true,
                     ajax: {
                         url: '{{route('report.stock.detail')}}',
-                        method:'post',
+                        method: 'post',
                         data: {
-                            'data':{'id' : $(this).attr('id'),'_token': '{{csrf_token()}}'},
+                            'data': {'id': $(this).attr('id'), '_token': '{{csrf_token()}}'},
                         }
                     },
                     columns: [
@@ -380,6 +391,7 @@
 
                 });
             });
+
             //sell
             function cbSell(start, end) {
                 $('#reportrange-sell span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -402,9 +414,13 @@
                             deferRender: true,
                             ajax: {
                                 url: '{{route('report.invoice.data.detail')}}',
-                                method:'post',
+                                method: 'post',
                                 data: {
-                                    'range' : {'start':start.format('MMMM D, YYYY'),'end':end.format('MMMM D, YYYY'),'_token': '{{csrf_token()}}'},
+                                    'range': {
+                                        'start': start.format('MMMM D, YYYY'),
+                                        'end': end.format('MMMM D, YYYY'),
+                                        '_token': '{{csrf_token()}}'
+                                    },
                                 }
                             },
                             columns: [
@@ -419,6 +435,7 @@
                     }
                 });
             }
+
             $('#reportrange-sell').daterangepicker({
                 startDate: start,
                 endDate: end,
@@ -435,16 +452,16 @@
             }, cbSell);
             cbSell(start, end);
             //modal sell
-            $(document).on('click','.btn-detail-sell',function () {
+            $(document).on('click', '.btn-detail-sell', function () {
                 $(".ui.modal.small").modal('show');
                 let id = $(this).attr('id');
                 //show income note
                 $.ajax({
-                    method:'post',
+                    method: 'post',
                     type: 'json',
-                    data: {'data':{'id' : $(this).attr('id'),'_token': '{{csrf_token()}}'}},
+                    data: {'data': {'id': $(this).attr('id'), '_token': '{{csrf_token()}}'}},
                     url: '{{route('report.invoice.income.note')}}',
-                    success:function (data) {
+                    success: function (data) {
                         $('#income_note').text(parseInt(data[0].amount).toFixed(2))
                     }
                 });
@@ -456,40 +473,51 @@
                     deferRender: true,
                     ajax: {
                         url: '{{route('report.invoice.detail')}}',
-                        method:'post',
+                        method: 'post',
                         data: {
-                            'data':{'id' : $(this).attr('id'),'_token': '{{csrf_token()}}'},
+                            'data': {'id': $(this).attr('id'), '_token': '{{csrf_token()}}'},
                         }
                     },
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'stock_detail.variation.product.image', name: 'stock_detail.variation.product.image'},
-                        {data: 'stock_detail.variation.product.productName', name: 'stock_detail.variation.product.productName'},
-                        {data: 'stock_detail.variation.product.category', name: 'stock_detail.variation.product.category'},
+                        {
+                            data: 'stock_detail.variation.product.productName',
+                            name: 'stock_detail.variation.product.productName'
+                        },
+                        {
+                            data: 'stock_detail.variation.product.category',
+                            name: 'stock_detail.variation.product.category'
+                        },
                         {data: 'stock_detail.variation.variationName', name: 'stock_detail.variation.variationName'},
                         {data: 'amount', name: 'amount'},
                         {data: 'qty', name: 'qty'},
                         {data: 'created_at', name: 'created_at'},
                     ],
-                    drawCallback(settings){
+                    drawCallback(settings) {
                         let sum = 0;
-                        $.each(settings.json['data'],function (key,value) {
+                        $.each(settings.json['data'], function (key, value) {
                             //value to float
                             let currency_val = value.amount;
-                            currency_val = currency_val.replace('USD ','');
+                            currency_val = currency_val.replace('USD ', '');
                             currency_val = parseFloat(parseFloat(currency_val).toFixed(2));
-                            sum +=currency_val;
+                            sum += currency_val;
                         });
                         //show income note
                         $.ajax({
-                            method:'post',
+                            method: 'post',
                             type: 'json',
-                            data: {'data':{'id' : id,'_token': '{{csrf_token()}}'}},
+                            data: {
+                                'data': {
+                                    'id': id,
+                                    '_token': '{{csrf_token()}}'
+                                }
+                            },
                             url: '{{route('report.invoice.income.note')}}',
-                            success:function (data) {
+                            success: function (data) {
                                 let income_note_amount = parseFloat(data[0].amount);
                                 $('#income_note').text(income_note_amount.toFixed(2));
-                                $('#total_amount').text((sum+income_note_amount).toFixed(2));
+                                $('#total_amount').text((sum + income_note_amount).toFixed(2));
                             }
                         });
                     }
