@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Akaunting\\Money\\Currency' => $vendorDir . '/akaunting/money/src/Currency.php',
+    'Akaunting\\Money\\Money' => $vendorDir . '/akaunting/money/src/Money.php',
+    'Akaunting\\Money\\Provider' => $vendorDir . '/akaunting/money/src/Provider.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',

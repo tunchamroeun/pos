@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Akaunting\Money\Currency;
+use Akaunting\Money\Money;
 use App\IncomeNote;
 use App\Invoice;
 use App\InvoiceDetail;
@@ -9,9 +11,7 @@ use App\Stock;
 use App\StockDetail;
 use App\Variation;
 use Carbon\Carbon;
-use Cknow\Money\Money;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Yajra\DataTables\DataTables;
 
 class ReportController extends Controller
@@ -56,7 +56,7 @@ class ReportController extends Controller
                 return $date->created_at->diffForHumans();
             })
             ->editColumn('total_pur_price',function ($total_pur_price){
-                return Money::USD($total_pur_price->total_pur_price);
+                return new Money($total_pur_price->total_pur_price, new Currency('USD'), true);
             })
             ->addColumn('action',function ($action){
                 return '<button class="ui button mini olive btn-detail" id="'.$action->id.'"><i class="icon eye"></i></button>';
@@ -75,7 +75,7 @@ class ReportController extends Controller
                 return $date->created_at->diffForHumans();
             })
             ->editColumn('pur_price',function ($pur){
-                return Money::USD($pur->pur_price);
+                return new Money($pur->pur_price, new Currency('USD'), true);
             })
             ->rawColumns(['variation.product.image'])
             ->toJson();
@@ -119,7 +119,7 @@ class ReportController extends Controller
                 return $date->created_at->diffForHumans();
             })
             ->editColumn('total_amount',function ($total_amount){
-                return Money::USD($total_amount->total_amount);
+                return new Money($total_amount->total_amount, new Currency('USD'), true);
             })
             ->addColumn('action',function ($action){
                 return '<button class="ui button mini olive btn-detail-sell" id="'.$action->id.'"><i class="icon eye"></i></button>';
@@ -144,7 +144,7 @@ class ReportController extends Controller
                 return $date->created_at->diffForHumans();
             })
             ->editColumn('amount',function ($pur){
-                return Money::USD($pur->amount);
+                return new Money($pur->amount, new Currency('USD'), true);
             })
             ->rawColumns(['stock_detail.variation.product.image'])
             ->toJson();

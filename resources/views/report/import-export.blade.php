@@ -354,9 +354,10 @@
                         $.each(settings.json['data'],function (key,value) {
                             //value to float
                             let currency_val = value.amount;
-                            currency_val = currency_val.replace('USD ','');
+                            currency_val = currency_val.replace('$', '');
                             currency_val = parseFloat(parseFloat(currency_val).toFixed(2));
-                            sum +=currency_val;
+                            currency_val *=value.qty;
+                            sum += currency_val;
                         });
                         //show income note
                         $.ajax({

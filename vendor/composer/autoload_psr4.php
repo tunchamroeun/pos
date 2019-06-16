@@ -66,4 +66,5 @@ return array(
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'BeyondCode\\DumpServer\\' => array($vendorDir . '/beyondcode/laravel-dump-server/src'),
     'App\\' => array($baseDir . '/app'),
+    'Akaunting\\Money\\' => array($vendorDir . '/akaunting/money/src'),
 );

@@ -22,6 +22,7 @@ class ComposerStaticInitd2643823e8327ddaca52074ed692c3d8
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
+        'edce8962b03f4b83e36b18e5e0097f24' => __DIR__ . '/..' . '/akaunting/money/src/helpers.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         'b1c568daa42ef00d6ac4f268ee6deb89' => __DIR__ . '/..' . '/cknow/laravel-money/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
@@ -154,6 +155,7 @@ class ComposerStaticInitd2643823e8327ddaca52074ed692c3d8
         'A' => 
         array (
             'App\\' => 4,
+            'Akaunting\\Money\\' => 16,
         ),
     );
 
@@ -400,6 +402,10 @@ class ComposerStaticInitd2643823e8327ddaca52074ed692c3d8
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'Akaunting\\Money\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/akaunting/money/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -435,6 +441,9 @@ class ComposerStaticInitd2643823e8327ddaca52074ed692c3d8
     );
 
     public static $classMap = array (
+        'Akaunting\\Money\\Currency' => __DIR__ . '/..' . '/akaunting/money/src/Currency.php',
+        'Akaunting\\Money\\Money' => __DIR__ . '/..' . '/akaunting/money/src/Money.php',
+        'Akaunting\\Money\\Provider' => __DIR__ . '/..' . '/akaunting/money/src/Provider.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
