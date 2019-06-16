@@ -53,7 +53,7 @@ class StockController extends Controller
         $product = Product::with('variation_stock_detail')->get();
         return Datatables::of($product)
             ->addColumn('action', function ($product) {
-                return '<button href="#" id="'.$product->id.'" class="ui button px-2 pink"><i class="ion-arrow-right-a icon"></i> បន្ថែម</button>';
+                return '<button href="#" id="'.$product->id.'" class="ui button px-2 pink btn-add"><i class="ion-arrow-right-a icon"></i> បន្ថែម</button>';
             })
             ->addColumn('image', function ($product) {
                 return '<img class="ui avatar image" src="'.asset($product->image).'" alt="">';

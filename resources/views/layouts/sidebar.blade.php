@@ -78,9 +78,9 @@
             <a class="item {{request()->is('report/income-expense')? 'active':''}}" href="{{route('report.income.expense')}}">
                 ចំណូល / ចំណាយ
             </a>
-            {{--<a class="item" href="">
+            <a class="item {{request()->is('report/check-stock-index')? 'active':''}}" href="{{route('report.check.stock.index')}}">
                 ពិនិត្យស្តុក
-            </a>--}}
+            </a>
         </div>
 
     </div>
@@ -117,9 +117,9 @@
             <a class="item" href="{{route('report.income.expense')}}">
                 ចំណូល / ចំណាយ
             </a>
-            {{--<a class="item" href="">
+            <a class="item" href="{{route('report.check.stock.index')}}">
                 ពិនិត្យស្តុក
-            </a>--}}
+            </a>
         </div>
     </div>
     @else

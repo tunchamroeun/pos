@@ -153,7 +153,6 @@ $('.ui.accordion').accordion({
 });
 
 $(document).ready(function() {
-
     colorize();
     $('.special.cards .image').dimmer({
         on: 'hover'
@@ -176,7 +175,6 @@ $(document).ready(function() {
     $.each(imgPicker, function (index, value) {
         $(value).filemanager('file');
     });
-
 });
 //Sidebar And Navbar Coloring Function (This button on Footer)
 function colorize() {

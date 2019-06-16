@@ -136,7 +136,7 @@
                     { data: 'action', name: 'action' }
                 ]
             });
-            $(document).on('click','#product_list',function (event) {
+            $(document).on('click','.btn-add',function (event) {
                 let proId = parseInt(event.target.id);
                 let url = '{{route('stock.product.variation',':id')}}';
                 url = url.replace(':id',proId);

@@ -92,7 +92,7 @@
                                         $<span id="totalAmount-sell">0.00</span>
                                     </div>
                                     <div class="label">
-                                        តម្លៃទិញ
+                                        តម្លៃលក់
                                     </div>
                                     <i class="icon ion-cash teal statisticIcon"></i>
                                 </div>
@@ -105,7 +105,7 @@
                                         <span id="totalQty-sell">0.00</span>
                                     </div>
                                     <div class="label">
-                                        ចំនួនទិញ
+                                        ចំនួនលក់
                                     </div>
                                     <i class="icon ion-ios-cart teal statisticIcon"></i>
                                 </div>
@@ -138,6 +138,9 @@
                 <table id="import-stock-modal" class="ui compact selectable striped celled table tablet stackable datatable">
                     <thead>
                     <tr>
+                        <th colspan="8">ថ្លែឈ្នួល $ <span id="income_note"></span> សរុប $ <span id="total_amount"></span></th>
+                    </tr>
+                    <tr>
                         <th>ល.រ</th>
                         <th></th>
                         <th>ឈ្មោះ</th>
@@ -167,15 +170,11 @@
     <script type="text/javascript" src="{{asset('sigware/js/daterangepicker.min.js')}}"></script>
     <script src="{{asset('sigware/plugins/datatable/jquery.dataTables.js')}}"></script>
     <script src="{{asset('sigware/js/customjs/custom-datatable.js')}}"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
 @endpush
 @section('js')
     <script type="text/javascript">
         $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': '{{csrf_token()}}'
-                }
-            });
             //import
             var start = moment().subtract(29, 'days');
             var end = moment();
@@ -202,7 +201,11 @@
                                 url: '{{route('report.stock.data.detail')}}',
                                 method:'post',
                                 data: {
-                                    'range' : {'start':start.format('MMMM D, YYYY'),'end':end.format('MMMM D, YYYY')},
+                                    'range' : {
+                                        'start':start.format('MMMM D, YYYY'),
+                                        'end':end.format('MMMM D, YYYY'),
+                                        '_token': '{{csrf_token()}}'
+                                    },
                                 }
                             },
                             columns: [
@@ -245,7 +248,7 @@
                         url: '{{route('report.stock.detail')}}',
                         method:'post',
                         data: {
-                            'id' : $(this).attr('id'),
+                            'data':{'id' : $(this).attr('id'),'_token': '{{csrf_token()}}'},
                         }
                     },
                     columns: [
@@ -258,6 +261,10 @@
                         {data: 'qty', name: 'qty'},
                         {data: 'created_at', name: 'created_at'},
                     ],
+                    drawCallback(settings) {
+                        $('#income_note').text(0);
+                        $('#total_amount').text(0);
+                    }
 
                 });
             });
@@ -285,7 +292,7 @@
                                 url: '{{route('report.invoice.data.detail')}}',
                                 method:'post',
                                 data: {
-                                    'range' : {'start':start.format('MMMM D, YYYY'),'end':end.format('MMMM D, YYYY')},
+                                    'range' : {'start':start.format('MMMM D, YYYY'),'end':end.format('MMMM D, YYYY'),'_token': '{{csrf_token()}}'},
                                 }
                             },
                             columns: [
@@ -318,6 +325,7 @@
             //modal sell
             $(document).on('click','.btn-detail-sell',function () {
                 $(".ui.modal.small").modal('show');
+                let id = $(this).attr('id');
                 //modal table
                 let product = $('#import-stock-modal').DataTable({
                     destroy: true,
@@ -328,7 +336,7 @@
                         url: '{{route('report.invoice.detail')}}',
                         method:'post',
                         data: {
-                            'id' : $(this).attr('id'),
+                            'data':{'id' : $(this).attr('id'),'_token': '{{csrf_token()}}'},
                         }
                     },
                     columns: [
@@ -341,8 +349,31 @@
                         {data: 'qty', name: 'qty'},
                         {data: 'created_at', name: 'created_at'},
                     ],
+                    drawCallback(settings){
+                        let sum = 0;
+                        $.each(settings.json['data'],function (key,value) {
+                            //value to float
+                            let currency_val = value.amount;
+                            currency_val = currency_val.replace('USD ','');
+                            currency_val = parseFloat(parseFloat(currency_val).toFixed(2));
+                            sum +=currency_val;
+                        });
+                        //show income note
+                        $.ajax({
+                            method:'post',
+                            type: 'json',
+                            data: {'data':{'id' : id,'_token': '{{csrf_token()}}'}},
+                            url: '{{route('report.invoice.income.note')}}',
+                            success:function (data) {
+                                let income_note_amount = parseFloat(data[0].amount);
+                                $('#income_note').text(income_note_amount.toFixed(2));
+                                $('#total_amount').text((sum+income_note_amount).toFixed(2));
+                            }
+                        });
+                    }
 
                 });
+                console.log(product.column( 5 ).data());
             });
         });
     </script>

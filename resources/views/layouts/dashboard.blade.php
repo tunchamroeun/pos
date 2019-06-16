@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>@yield('title') | SigWare</title>
+    <meta name="_token" content="{{ csrf_token() }}">
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
@@ -10,7 +11,6 @@
     <link href="{{asset('sigware/css/main.css')}}" rel="stylesheet"/>
     <link href="{{asset('sigware/plugins/pacejs/pace.css')}}" rel="stylesheet"/>
     @stack('css')
-    <link href="{{asset('sigware/css/utilities-stylesheet.css')}}" rel="stylesheet"/>
     <link href="{{asset('sigware/css/custom-css.css')}}" rel="stylesheet"/>
     @yield('css')
 </head>
@@ -42,9 +42,9 @@
 <script src="{{asset('sigware/plugins/cookie/js.cookie.js')}}"></script>
 <script src="{{asset('sigware/plugins/nicescrool/jquery.nicescroll.min.js')}}"></script>
 <script data-pace-options='{ "ajax": false }' src="{{asset('sigware/plugins/pacejs/pace.js')}}"></script>
-<script src="{{asset('sigware/js/main.js')}}"></script>
 @stack('js')
-{{--<script src="{{asset('sigware/js/custom-script.js')}}"></script>--}}
+<script src="{{asset('sigware/js/custom-script.js')}}"></script>
+<script src="{{asset('sigware/js/main.js')}}"></script>
 @yield('js')
 </body>
 </html>

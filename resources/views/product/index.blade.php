@@ -100,7 +100,6 @@
     </div>
 @stop
 @push('css')
-    <link rel="stylesheet" href="">
 @endpush
 @push('js')
     <script src="{{asset('sigware/plugins/datatable/jquery.dataTables.js')}}"></script>

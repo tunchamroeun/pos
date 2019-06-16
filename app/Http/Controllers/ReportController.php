@@ -65,7 +65,7 @@ class ReportController extends Controller
     function stock_report_detail(Request $request){
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         $input = $request->all();
-        $stockData = StockDetail::with('variation')->where('stock_id',$input['id'])->get();
+        $stockData = StockDetail::with('variation')->where('stock_id',$input['data']['id'])->get();
         return DataTables::of($stockData)
             ->editColumn('variation.product.image',function ($img){
                 return '<img class="ui image avatar" src="'.asset($img->variation->product->image).'" alt="">';
@@ -125,10 +125,16 @@ class ReportController extends Controller
             })
             ->toJson();
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     function invoice_report_detail(Request $request){
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         $input = $request->all();
-        $stockData = InvoiceDetail::with('stock_detail')->where('invoice_id',$input['id'])->get();
+        $stockData = InvoiceDetail::with('stock_detail')->where('invoice_id',$input['data']['id'])->get();
         return DataTables::of($stockData)
             ->editColumn('stock_detail.variation.product.image',function ($img){
                 return '<img class="ui image avatar" src="'.asset($img->stock_detail->variation->product->image).'" alt="">';
@@ -141,6 +147,11 @@ class ReportController extends Controller
             })
             ->rawColumns(['stock_detail.variation.product.image'])
             ->toJson();
+    }
+    //show income note
+    public function show_income_note(Request $request){
+        $input = $request->all();
+        return IncomeNote::where('invoice_id',$input['data']['id'])->get();
     }
     //index check stock
     public function check_stock_index(){
@@ -166,18 +177,12 @@ class ReportController extends Controller
     }
     public function check_stock_notification(){
         $notification_html = Variation::with(['check_stock_detail','product'])->whereDoesntHave('check_stock_detail')->get();
+        $notification_count = Variation::with(['check_stock_detail','product'])->whereDoesntHave('check_stock_detail')->count();
         $html = view('report.notification',compact('notification_html'));
-        /*return $notification = [
-            'count'=>1,
-            'html'=>  $html
-        ];*/
-        $html = '';
-        foreach ($notification_html as $value){
-            $html .= '<div class="item">
-                    <img class="ui avatar image" src="" alt="label-image" />
-                    អាវប្រេន (បារកូដ: 3948398343 ទំហំ: M)
-                    </div>';
-        }
+        return [
+            'count'=>$notification_count,
+            'html'=>$html->render()
+        ];
     }
     public function dd(){
 

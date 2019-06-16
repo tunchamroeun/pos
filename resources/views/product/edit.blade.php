@@ -114,7 +114,7 @@
 @endpush
 @push('js')
     <script src="{{asset('sigware/plugins/datatable/jquery.dataTables.js')}}"></script>
-    <script src="{{asset('sigware/js/customjs/custom-datatable.js')}}"></script>
+    <script src="{{asset('sigware')}}"></script>
     <script src="{{asset('vendor/laravel-filemanager/js/lfm.js')}}"></script>
 @endpush
 @section('js')

@@ -51,7 +51,7 @@ class InvoiceController extends Controller
     }
     public function selling_list()
     {
-        $stockItem =  StockDetail::with('variation')->where('remain_qty','>=',1)->limit(1)->get();
+        $stockItem =  StockDetail::with('variation')->where('remain_qty','>=',1)->get();
         return Datatables::of($stockItem)->toJson();
     }
 

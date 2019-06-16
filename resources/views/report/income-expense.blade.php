@@ -83,11 +83,6 @@
 @section('js')
     <script>
         $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': '{{csrf_token()}}'
-                }
-            });
             //import
             var start = moment().subtract(29, 'days');
             var end = moment();

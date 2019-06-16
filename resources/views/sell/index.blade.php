@@ -74,11 +74,6 @@
 @section('js')
     <script>
         $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': '{{csrf_token()}}'
-                }
-            });
             let product = $('#product_list').DataTable({
                 destroy: true,
                 processing: true,

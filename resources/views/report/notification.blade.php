@@ -3,9 +3,9 @@
 </div>
 @foreach($notification_html as $item)
     <div class="item">
-        <img class="ui avatar image" src="{{asset('sigware/img/avatar/people/enid.png')}}" alt="label-image" />
-        អាវប្រេន (បារកូដ: 3948398343 ទំហំ: M)
+        <img class="ui avatar image" src="{{asset($item->product->image)}}" alt="label-image" />
+        {{$item->product->productName}}
     </div>
     @endforeach
 <div class="ui divider"></div>
-<a class="item" href="">បង្ហាញទាំអស់</a>
+<a class="item" href="{{route('report.check.stock.index')}}">បង្ហាញទាំអស់</a>

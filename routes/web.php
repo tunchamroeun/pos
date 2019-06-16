@@ -66,8 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('report/invoice-data', 'ReportController@invoice_report_data')->name('report.invoice.data');
     Route::post('report/invoice-data-detail', 'ReportController@invoice_report_data_detail')->name('report.invoice.data.detail');
     Route::post('report/invoice-detail', 'ReportController@invoice_report_detail')->name('report.invoice.detail');
+    Route::post('report/invoice-income-note', 'ReportController@show_income_note')->name('report.invoice.income.note');
 //check stock
     Route::get('report/check-stock-index', 'ReportController@check_stock_index')->name('report.check.stock.index');
     Route::get('report/check-stock', 'ReportController@check_stock')->name('report.check.stock');
-    Route::get('report/check-stock-notification', 'ReportController@check_stock_notification')->name('report.check.stock.notification');
+    Route::post('report/check-stock-notification', 'ReportController@check_stock_notification')->name('report.check.stock.notification');
 });
