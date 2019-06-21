@@ -20,7 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
         if (Auth::user()->role ===1){
             return view('dashboard.index');
         }else{
-            return view('sell.index');
+            return view('report.check-price');
         }
     });
     Route::get('dashboard', function () {
@@ -57,20 +57,27 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('pos-invoice-detail', 'InvoiceController@pos_invoice_detail')->name('pos.invoice.detail');
     /*Report*/
     Route::get('report/import-export', 'ReportController@report_import_export')->name('report.import.export');
+    Route::get('report/import-export-no-income-note', 'ReportController@report_import_export_no_income_note')->name('report.import.export.no.income.note');
     Route::get('report/income-expense', 'ReportController@report_income_expense')->name('report.income.expense');
+    Route::get('report/income-expense-no-income-note', 'ReportController@report_income_expense_no_income_note')->name('report.income.expense.no.income.note');
+    Route::get('report/income-note', 'ReportController@income_note')->name('report.income.note');
+    Route::get('check-price', 'ReportController@check_price')->name('report.check-price');
 //import
     Route::post('report/stock-data', 'ReportController@stock_report_data')->name('report.stock.data');
     Route::post('report/stock-data-detail', 'ReportController@stock_report_data_detail')->name('report.stock.data.detail');
     Route::post('report/stock-detail', 'ReportController@stock_report_detail')->name('report.stock.detail');
 //sell
     Route::post('report/invoice-data', 'ReportController@invoice_report_data')->name('report.invoice.data');
+    Route::post('report/invoice-data-no-income-note', 'ReportController@invoice_report_data_no_income')->name('report.invoice.data.no.income.note');
     Route::post('report/invoice-data-detail', 'ReportController@invoice_report_data_detail')->name('report.invoice.data.detail');
     Route::post('report/invoice-detail', 'ReportController@invoice_report_detail')->name('report.invoice.detail');
     Route::post('report/invoice-income-note', 'ReportController@show_income_note')->name('report.invoice.income.note');
+    Route::post('report/invoice-income-note-range', 'ReportController@income_note_range')->name('report.invoice.income.note.range');
 //check stock
     Route::get('report/check-stock-index', 'ReportController@check_stock_index')->name('report.check.stock.index');
     Route::get('report/check-stock', 'ReportController@check_stock')->name('report.check.stock');
     Route::post('report/check-stock-notification', 'ReportController@check_stock_notification')->name('report.check.stock.notification');
+    Route::get('report/check-stock-price', 'ReportController@check_price_json')->name('report.check.stock.json');
     //Manage Stock
     Route::post('manage-stock','ManageStock@store')->name('manage.stock.store');
     //Invoicing

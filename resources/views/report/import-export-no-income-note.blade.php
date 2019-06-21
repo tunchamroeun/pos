@@ -1,77 +1,8 @@
 @extends('layouts.dashboard')
 @section('title')
-    ផ្ទាំងគ្រប់គ្រង
+    របាយការណ៍ - លក់ចេញ/ទិញចូល
 @stop
 @section('content')
-    <div class="row">
-        <div class="sixteen wide tablet sixteen wide computer column">
-            <div class="ui segments stacked">
-                <div class="ui segment">
-                    <h5 class="ui header">ចំណូលចំណាយ</h5>
-                </div>
-                <div class="ui segment">
-                    <div class="ui input">
-                        <div id="reportrange-imp-sell"
-                             style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                            <i class="icon calendar"></i>&nbsp;
-                            <span></span> <i class="icon caret down"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui segment grid">
-                    <div class="row">
-                        <div class="eight wide tablet eight wide computer column">
-
-                            <div class="ui segment left aligned">
-
-                                <div class="ui  statistic">
-                                    <div class="value counter">
-                                        $<span id="expense">0.00</span>
-                                    </div>
-                                    <div class="label">
-                                        ចំណាយ
-                                    </div>
-                                    <i class="icon ion-cash teal statisticIcon"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="eight wide tablet eight wide computer column">
-
-                            <div class="ui segment left aligned">
-
-                                <div class="ui  statistic">
-                                    <div class="value">
-                                        $<span id="income">0.00</span>
-                                    </div>
-                                    <div class="label">
-                                        ចំណូល
-                                    </div>
-                                    <i class="icon ion-cash teal statisticIcon"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="eight wide tablet eight wide computer column">
-
-                            <div class="ui segment left aligned">
-
-                                <div class="ui  statistic">
-                                    <div class="value">
-                                        $<span id="revenue">0.00</span>
-                                    </div>
-                                    <div class="label">
-                                        ចំណេញ/ខាត
-                                    </div>
-                                    <i class="icon ion-cash teal statisticIcon"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="sixteen wide tablet eight wide computer column">
             <div class="ui segments stacked">
@@ -98,7 +29,7 @@
                                         $<span id="totalPur">0.00</span>
                                     </div>
                                     <div class="label">
-                                        តម្លៃលក់
+                                        តម្លៃទិញ
                                     </div>
                                     <i class="icon ion-cash teal statisticIcon"></i>
                                 </div>
@@ -113,7 +44,7 @@
                                         <span id="totalQty">0.00</span>
                                     </div>
                                     <div class="label">
-                                        ចំនួនលក់
+                                        ចំនួនទិញ
                                     </div>
                                     <i class="icon ion-android-cart teal statisticIcon"></i>
                                 </div>
@@ -122,8 +53,7 @@
                     </div>
                 </div>
                 <div class="ui segment">
-                    <table id="import-stock"
-                           class="ui compact selectable striped celled table tablet stackable datatable">
+                    <table id="import-stock" class="ui compact selectable striped celled table tablet stackable datatable">
                         <thead>
                         <tr>
                             <th>ល.រ</th>
@@ -162,7 +92,7 @@
                                         $<span id="totalAmount-sell">0.00</span>
                                     </div>
                                     <div class="label">
-                                        តម្លៃទិញ
+                                        តម្លៃលក់
                                     </div>
                                     <i class="icon ion-cash teal statisticIcon"></i>
                                 </div>
@@ -175,7 +105,7 @@
                                         <span id="totalQty-sell">0.00</span>
                                     </div>
                                     <div class="label">
-                                        ចំនួនទិញ
+                                        ចំនួនលក់
                                     </div>
                                     <i class="icon ion-ios-cart teal statisticIcon"></i>
                                 </div>
@@ -205,13 +135,8 @@
                 លម្អិតទំនិញ
             </div>
             <div class="content">
-                <table id="import-stock-modal"
-                       class="ui compact selectable striped celled table tablet stackable datatable">
+                <table id="import-stock-modal" class="ui compact selectable striped celled table tablet stackable datatable">
                     <thead>
-                    <tr>
-                        <th colspan="8">ថ្លែឈ្នួល $ <span id="income_note"></span> សរុប $ <span
-                                id="total_amount"></span></th>
-                    </tr>
                     <tr>
                         <th>ល.រ</th>
                         <th></th>
@@ -242,64 +167,14 @@
     <script type="text/javascript" src="{{asset('sigware/js/daterangepicker.min.js')}}"></script>
     <script src="{{asset('sigware/plugins/datatable/jquery.dataTables.js')}}"></script>
     <script src="{{asset('sigware/js/customjs/custom-datatable.js')}}"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
 @endpush
 @section('js')
-    <script>
+    <script type="text/javascript">
         $(function () {
             //import
             var start = moment().subtract(29, 'days');
             var end = moment();
-
-            function cbImpSell(start, end) {
-                $('#reportrange-imp-sell span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                $.ajax({
-                    method: 'post',
-                    type: 'json',
-                    data: {
-                        '_token': '{{csrf_token()}}',
-                        'start': start.format('MMMM D, YYYY'),
-                        'end': end.format('MMMM D, YYYY'),
-                    },
-                    url: '{{route('report.stock.data')}}',
-                    success: function (data) {
-                        $('#expense').text(parseFloat(data.totalPur).toFixed(2));
-                        $.ajax({
-                            method: 'post',
-                            type: 'json',
-                            data: {
-                                '_token': '{{csrf_token()}}',
-                                'start': start.format('MMMM D, YYYY'),
-                                'end': end.format('MMMM D, YYYY'),
-                            },
-                            url: '{{route('report.invoice.data')}}',
-                            success: function (_data) {
-                                $('#income').text(parseFloat(_data.totalAmount).toFixed(2));
-                                let lostProfit = parseFloat(_data.totalAmount - data.totalPur).toFixed(2);
-                                $('#revenue').text(lostProfit);
-                            }
-                        });
-                    }
-                });
-
-            }
-
-            $('#reportrange-imp-sell').daterangepicker({
-                startDate: start,
-                endDate: end,
-                ranges: {
-                    'ថ្ងៃនេះ': [moment(), moment()],
-                    'ម្សិលមិញ': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'ប្រាំពីរថ្ងៃមុន': [moment().subtract(6, 'days'), moment()],
-                    'សាមសិបថ្ងៃមុន': [moment().subtract(29, 'days'), moment()],
-                    'ខែនេះ': [moment().startOf('month'), moment().endOf('month')],
-                    'ខែមុន': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    'ឆ្នាំនេះ': [moment().startOf('year'), moment().endOf('year')],
-                    'ឆ្នាំមុន': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
-                }
-            }, cbImpSell);
-            cbImpSell(start, end);
-
-            /*import export*/
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
                 $.ajax({
@@ -321,11 +196,11 @@
                             deferRender: true,
                             ajax: {
                                 url: '{{route('report.stock.data.detail')}}',
-                                method: 'post',
+                                method:'post',
                                 data: {
-                                    'range': {
-                                        'start': start.format('MMMM D, YYYY'),
-                                        'end': end.format('MMMM D, YYYY'),
+                                    'range' : {
+                                        'start':start.format('MMMM D, YYYY'),
+                                        'end':end.format('MMMM D, YYYY'),
                                         '_token': '{{csrf_token()}}'
                                     },
                                 }
@@ -342,7 +217,6 @@
                     }
                 });
             }
-
             $('#reportrange').daterangepicker({
                 startDate: start,
                 endDate: end,
@@ -359,7 +233,7 @@
             }, cb);
             cb(start, end);
             //modal import
-            $(document).on('click', '.btn-detail', function () {
+            $(document).on('click','.btn-detail',function () {
                 $(".ui.modal.small").modal('show');
                 //aa
                 let product = $('#import-stock-modal').DataTable({
@@ -369,9 +243,9 @@
                     deferRender: true,
                     ajax: {
                         url: '{{route('report.stock.detail')}}',
-                        method: 'post',
+                        method:'post',
                         data: {
-                            'data': {'id': $(this).attr('id'), '_token': '{{csrf_token()}}'},
+                            'data':{'id' : $(this).attr('id'),'_token': '{{csrf_token()}}'},
                         }
                     },
                     columns: [
@@ -391,7 +265,6 @@
 
                 });
             });
-
             //sell
             function cbSell(start, end) {
                 $('#reportrange-sell span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -403,7 +276,7 @@
                         'start': start.format('MMMM D, YYYY'),
                         'end': end.format('MMMM D, YYYY'),
                     },
-                    url: '{{route('report.invoice.data')}}',
+                    url: '{{route('report.invoice.data.no.income.note')}}',
                     success: function (data) {
                         $('#totalAmount-sell').text(parseFloat(data.totalAmount).toFixed(2));
                         $('#totalQty-sell').text(data.totalQty);
@@ -414,13 +287,9 @@
                             deferRender: true,
                             ajax: {
                                 url: '{{route('report.invoice.data.detail')}}',
-                                method: 'post',
+                                method:'post',
                                 data: {
-                                    'range': {
-                                        'start': start.format('MMMM D, YYYY'),
-                                        'end': end.format('MMMM D, YYYY'),
-                                        '_token': '{{csrf_token()}}'
-                                    },
+                                    'range' : {'start':start.format('MMMM D, YYYY'),'end':end.format('MMMM D, YYYY'),'_token': '{{csrf_token()}}'},
                                 }
                             },
                             columns: [
@@ -435,7 +304,6 @@
                     }
                 });
             }
-
             $('#reportrange-sell').daterangepicker({
                 startDate: start,
                 endDate: end,
@@ -452,19 +320,9 @@
             }, cbSell);
             cbSell(start, end);
             //modal sell
-            $(document).on('click', '.btn-detail-sell', function () {
+            $(document).on('click','.btn-detail-sell',function () {
                 $(".ui.modal.small").modal('show');
                 let id = $(this).attr('id');
-                //show income note
-                $.ajax({
-                    method: 'post',
-                    type: 'json',
-                    data: {'data': {'id': $(this).attr('id'), '_token': '{{csrf_token()}}'}},
-                    url: '{{route('report.invoice.income.note')}}',
-                    success: function (data) {
-                        $('#income_note').text(parseInt(data[0].amount).toFixed(2))
-                    }
-                });
                 //modal table
                 let product = $('#import-stock-modal').DataTable({
                     destroy: true,
@@ -473,30 +331,24 @@
                     deferRender: true,
                     ajax: {
                         url: '{{route('report.invoice.detail')}}',
-                        method: 'post',
+                        method:'post',
                         data: {
-                            'data': {'id': $(this).attr('id'), '_token': '{{csrf_token()}}'},
+                            'data':{'id' : $(this).attr('id'),'_token': '{{csrf_token()}}'},
                         }
                     },
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'stock_detail.variation.product.image', name: 'stock_detail.variation.product.image'},
-                        {
-                            data: 'stock_detail.variation.product.productName',
-                            name: 'stock_detail.variation.product.productName'
-                        },
-                        {
-                            data: 'stock_detail.variation.product.category',
-                            name: 'stock_detail.variation.product.category'
-                        },
+                        {data: 'stock_detail.variation.product.productName', name: 'stock_detail.variation.product.productName'},
+                        {data: 'stock_detail.variation.product.category', name: 'stock_detail.variation.product.category'},
                         {data: 'stock_detail.variation.variationName', name: 'stock_detail.variation.variationName'},
                         {data: 'amount', name: 'amount'},
                         {data: 'qty', name: 'qty'},
                         {data: 'created_at', name: 'created_at'},
                     ],
-                    drawCallback(settings) {
+                    drawCallback(settings){
                         let sum = 0;
-                        $.each(settings.json['data'], function (key, value) {
+                        $.each(settings.json['data'],function (key,value) {
                             //value to float
                             let currency_val = value.amount;
                             currency_val = currency_val.replace('$', '');
@@ -505,27 +357,21 @@
                         });
                         //show income note
                         $.ajax({
-                            method: 'post',
+                            method:'post',
                             type: 'json',
-                            data: {
-                                'data': {
-                                    'id': id,
-                                    '_token': '{{csrf_token()}}'
-                                }
-                            },
+                            data: {'data':{'id' : id,'_token': '{{csrf_token()}}'}},
                             url: '{{route('report.invoice.income.note')}}',
-                            success: function (data) {
-                                console.log(sum);
+                            success:function (data) {
                                 let income_note_amount = parseFloat(data[0].amount);
                                 $('#income_note').text(income_note_amount.toFixed(2));
-                                $('#total_amount').text((sum + income_note_amount).toFixed(2));
+                                $('#total_amount').text((sum+income_note_amount).toFixed(2));
                             }
                         });
                     }
 
                 });
+                console.log(product.column( 5 ).data());
             });
-
-        })
+        });
     </script>
 @stop

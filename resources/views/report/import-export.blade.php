@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title')
-    របាយការណ៍ - លក់ចេញ/ទិញចូល
+    របាយការណ៍ - លក់ចេញ/ទិញចូល - ថ្លៃឈ្នួល
 @stop
 @section('content')
     <div class="row">
@@ -70,7 +70,7 @@
         <div class="sixteen wide tablet eight wide computer column">
             <div class="ui segments stacked">
                 <div class="ui segment">
-                    <h5 class="ui header">លក់ចេញ</h5>
+                    <h5 class="ui header">លក់ចេញ និង ថ្លៃឈ្នួល</h5>
                 </div>
                 <div class="ui segment">
                     <div class="ui input">
@@ -356,7 +356,6 @@
                             let currency_val = value.amount;
                             currency_val = currency_val.replace('$', '');
                             currency_val = parseFloat(parseFloat(currency_val).toFixed(2));
-                            currency_val *=value.qty;
                             sum += currency_val;
                         });
                         //show income note

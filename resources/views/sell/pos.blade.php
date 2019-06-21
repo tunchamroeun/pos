@@ -149,11 +149,12 @@
             });
             function calcTotal() {
                 let total = 0;
+                let incomeNote = parseFloat($('#income-note').val());
                 let amount = document.querySelectorAll('#amount');
                 $.each(amount,function (key,val) {
-                    total +=parseFloat($(val).val());
+                    total +=parseFloat($(val).val())
                 });
-                $('#total').val(total.toFixed(2));
+                $('#total').val((total+incomeNote).toFixed(2));
             }
             function calcQty() {
                 let total = 0;
@@ -163,6 +164,10 @@
                 });
                 $('#total-qty').val(total);
             }
+            $(document).on('change keyup keypress blur mousewheel','#income-note',function () {
+                //cal total
+                calcTotal();
+            });
             $(document).on('click','.add-to-inv',function () {
                 let stock_id = parseInt($(this).attr('id'));
                 $.ajax({

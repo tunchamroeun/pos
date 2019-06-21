@@ -105,6 +105,25 @@ class ReportController extends Controller
             'totalQty'=>$totalQty,
         ];
     }
+    function invoice_report_data_no_income(Request $request){
+        $input = $request->all();
+        $start = Carbon::parse($input['start']);
+        $end = Carbon::parse($input['end']);
+        $start = date_format($start,'Y-m-d');
+        $end = date_format($end,'Y-m-d');
+        $end = Carbon::create($end)->addDay(1);
+        $stockData = Invoice::all()->whereBetween('created_at',[$start,$end]);
+        $totalAmount = 0;
+        $totalQty = 0;
+        foreach ($stockData as $value){
+            $totalAmount +=$value['total_amount'];
+            $totalQty +=$value['total_qty'];
+        }
+        return[
+            'totalAmount'=>$totalAmount,
+            'totalQty'=>$totalQty,
+        ];
+    }
     function invoice_report_data_detail(Request $request){
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         $input = $request->all();
@@ -185,7 +204,43 @@ class ReportController extends Controller
             'html'=>$html->render()
         ];
     }
-    public function dd(){
-
+    public function report_import_export_no_income_note(){
+        return view('report.import-export-no-income-note');
+    }
+    public function report_income_expense_no_income_note(){
+        return view('report.income-expense-no-income-note');
+    }
+    public function income_note(){
+        return view('report.income-note');
+    }
+    public function income_note_range(Request $request){
+        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        $input = $request->all();
+        $start = Carbon::parse($input['start']);
+        $end = Carbon::parse($input['end']);
+        $start = date_format($start,'Y-m-d');
+        $end = date_format($end,'Y-m-d');
+        $end = Carbon::create($end)->addDay(1);
+        $incomeNote = IncomeNote::all()->whereBetween('created_at',[$start,$end]);
+        $total = 0;
+        foreach ($incomeNote as $value){
+            $total +=$value['amount'];
+        }
+        return $total;
+    }
+    public function check_price(){
+        return view('report.check-price');
+    }
+    public function check_price_json(){
+        $stock = StockDetail::with('variation')->get();
+        return DataTables::of($stock)
+            ->editColumn('variation.product.image',function ($image){
+                return '<img class="ui image avatar" src="'.asset($image->variation->product->image).'">';
+            })
+            ->editColumn('sell_price',function ($sell_price){
+                return new Money($sell_price->sell_price, new Currency('USD'), true);
+            })
+            ->rawColumns(['variation.product.image'])
+            ->toJson();
     }
 }

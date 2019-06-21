@@ -1,13 +1,13 @@
 @extends('layouts.dashboard')
 @section('title')
-    របាយការណ៍ - ចំណូល/ចំណាយ
+    របាយការណ៍ - ថ្លៃឈ្នួល
 @stop
 @section('content')
     <div class="row">
         <div class="sixteen wide tablet sixteen wide computer column">
             <div class="ui segments stacked">
                 <div class="ui segment">
-                    <h5 class="ui header">ចំណូល/ចំណាយ និង ថ្លៃឈ្នួល</h5>
+                    <h5 class="ui header">ថ្លៃឈ្នួល</h5>
                 </div>
                 <div class="ui segment">
                     <div class="ui input">
@@ -26,42 +26,10 @@
 
                                 <div class="ui  statistic">
                                     <div class="value counter">
-                                        $<span id="expense">0.00</span>
+                                        $<span id="income-note">0.00</span>
                                     </div>
                                     <div class="label">
-                                        ចំណាយ
-                                    </div>
-                                    <i class="icon ion-cash teal statisticIcon"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="eight wide tablet eight wide computer column">
-
-                            <div class="ui segment left aligned">
-
-                                <div class="ui  statistic">
-                                    <div class="value">
-                                        $<span id="income">0.00</span>
-                                    </div>
-                                    <div class="label">
-                                        ចំណូល
-                                    </div>
-                                    <i class="icon ion-cash teal statisticIcon"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="eight wide tablet eight wide computer column">
-
-                            <div class="ui segment left aligned">
-
-                                <div class="ui  statistic">
-                                    <div class="value">
-                                        $<span id="revenue">0.00</span>
-                                    </div>
-                                    <div class="label">
-                                        ចំណេញ/ខាត
+                                        ថ្លៃឈ្លល
                                     </div>
                                     <i class="icon ion-cash teal statisticIcon"></i>
                                 </div>
@@ -96,24 +64,9 @@
                         'start': start.format('MMMM D, YYYY'),
                         'end': end.format('MMMM D, YYYY'),
                     },
-                    url: '{{route('report.stock.data')}}',
+                    url: '{{route('report.invoice.income.note.range')}}',
                     success: function (data) {
-                        $('#expense').text(parseFloat(data.totalPur).toFixed(2));
-                        $.ajax({
-                            method: 'post',
-                            type: 'json',
-                            data: {
-                                '_token': '{{csrf_token()}}',
-                                'start': start.format('MMMM D, YYYY'),
-                                'end': end.format('MMMM D, YYYY'),
-                            },
-                            url: '{{route('report.invoice.data')}}',
-                            success: function (_data) {
-                                $('#income').text(parseFloat(_data.totalAmount).toFixed(2));
-                                let lostProfit = parseFloat(_data.totalAmount - data.totalPur).toFixed(2);
-                                $('#revenue').text(lostProfit);
-                            }
-                        });
+                        $('#income-note').text(parseFloat(data).toFixed(2));
                     }
                 });
 

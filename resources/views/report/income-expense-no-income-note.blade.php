@@ -107,7 +107,7 @@
                                 'start': start.format('MMMM D, YYYY'),
                                 'end': end.format('MMMM D, YYYY'),
                             },
-                            url: '{{route('report.invoice.data')}}',
+                            url: '{{route('report.invoice.data.no.income.note')}}',
                             success: function (_data) {
                                 $('#income').text(parseFloat(_data.totalAmount).toFixed(2));
                                 let lostProfit = parseFloat(_data.totalAmount - data.totalPur).toFixed(2);
