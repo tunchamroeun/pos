@@ -71,4 +71,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('report/check-stock-index', 'ReportController@check_stock_index')->name('report.check.stock.index');
     Route::get('report/check-stock', 'ReportController@check_stock')->name('report.check.stock');
     Route::post('report/check-stock-notification', 'ReportController@check_stock_notification')->name('report.check.stock.notification');
+    //Manage Stock
+    Route::post('manage-stock','ManageStock@store')->name('manage.stock.store');
+    //Invoicing
+    Route::get('invoicing-stock','PosController@sell_list')->name('invoicing.stock');
+    Route::get('invoicing-select','PosController@sell_list_id')->name('invoicing.select');
+    Route::post('invoicing-reduce','InvoiceController@reduce_stock')->name('invoicing.reduce');
 });
+Route::get('pos', function () {
+    return view('sell.pos');
+})->name('pos.index');

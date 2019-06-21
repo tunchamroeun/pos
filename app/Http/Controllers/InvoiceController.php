@@ -130,4 +130,36 @@ class InvoiceController extends Controller
     {
         //
     }
+    public function reduce_stock(Request $request)
+    {
+        $input = $request->all();
+        $invoice = new Invoice();
+        $invoice->total_amount = $input['total'];
+        $invoice->total_qty = $input['total_qty'];
+        $invoice->save();
+        if ($invoice){
+            IncomeNote::insert([
+                'invoice_id'=>$invoice->id,
+                'amount'=>$input['income_note'],
+                'created_at'=>Carbon::now(),
+                'updated_at'=>Carbon::now(),
+            ]);
+            foreach ($input['invoice'] as $key =>$value){
+                InvoiceDetail::insert([
+                    'invoice_id'=>$invoice->id,
+                    'stock_detail_id'=>$key,
+                    'amount'=>$value['amount'],
+                    'qty'=>$value['qty'],
+                    'created_at'=>Carbon::now(),
+                    'updated_at'=>Carbon::now(),
+                ]);
+            }
+            foreach ($input['invoice'] as $key =>$value){
+                $stock = StockDetail::findOrFail($key);
+                $stock->remain_qty -= $value['qty'];
+                $stock->save();
+            }
+            return redirect()->back();
+        }
+    }
 }

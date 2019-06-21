@@ -11,6 +11,7 @@
     <link href="{{asset('sigware/css/main.css')}}" rel="stylesheet"/>
     <link href="{{asset('sigware/plugins/pacejs/pace.css')}}" rel="stylesheet"/>
     @stack('css')
+    <link href="{{asset('sigware/css/utilities-stylesheet.css')}}" rel="stylesheet"/>
     <link href="{{asset('sigware/css/custom-css.css')}}" rel="stylesheet"/>
     @yield('css')
 </head>
